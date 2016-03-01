@@ -87,6 +87,16 @@
   _.reject = function(collection, test) {
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
+    
+    var newArr = [];
+    /* modified copy of filter body
+    _.each(collection, function(item) {!test(item) ? newArr.push(item) : null});
+    */
+    // longer implementation, but uses the underbar functions we created
+    var opposite = _.filter(collection, test);
+    _.each(collection, function(item) {_.indexOf(opposite, item) > -1 ? null : newArr.push(item)});
+   
+    return newArr;
   };
 
   // Produce a duplicate-free version of the array.
