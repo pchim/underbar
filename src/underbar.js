@@ -290,7 +290,7 @@
     return function(){
       var newArgs = [];
       _.each(arguments, function(item){ Array.isArray(item) ? newArgs.push('['+item+']') : newArgs.push(item)});
-      Array.prototype.push.apply(newArgs, arguments);
+      //Array.prototype.push.apply(newArgs, arguments);
       seenArgs[newArgs] ? null : (seenArgs[newArgs] = func.apply(this, arguments));
       return seenArgs[newArgs];
     };
@@ -303,6 +303,11 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
+    var args = [];
+    Array.prototype.push.apply(args, arguments);
+    setTimeout(function(){
+      func.apply(this, args.slice(2));
+    }, wait);
   };
 
 
