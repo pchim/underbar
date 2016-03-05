@@ -220,6 +220,16 @@
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
+
+    var addKeys = function(obj2){ 
+      _.each(obj2, function(item, key){ 
+        obj[key] = item; 
+      }) 
+    };
+    
+    _.each(arguments, addKeys);
+
+    return obj;
   };
 
   // Like extend, but doesn't ever overwrite a key that already
