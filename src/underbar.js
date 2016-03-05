@@ -286,6 +286,14 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+    var seenArgs = {};
+    return function(){
+      var newArgs = [];
+      _.each(arguments, function(item){ Array.isArray(item) ? newArgs.push('['+item+']') : newArgs.push(item)});
+      Array.prototype.push.apply(newArgs, arguments);
+      seenArgs[newArgs] ? null : (seenArgs[newArgs] = func.apply(this, arguments));
+      return seenArgs[newArgs];
+    };
   };
 
   // Delays a function for the given number of milliseconds, and then calls
