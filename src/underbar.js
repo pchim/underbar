@@ -290,7 +290,6 @@
     return function(){
       var newArgs = [];
       _.each(arguments, function(item){ Array.isArray(item) ? newArgs.push('['+item+']') : newArgs.push(item)});
-      //Array.prototype.push.apply(newArgs, arguments);
       seenArgs[newArgs] ? null : (seenArgs[newArgs] = func.apply(this, arguments));
       return seenArgs[newArgs];
     };
@@ -322,6 +321,14 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
+    var copy = Array.prototype.slice.call(array); 
+    var rand = [];
+    while (copy.length > 0){
+      var index = Math.floor(Math.random()*copy.length);
+      rand.push(copy[index]);
+      copy = copy.slice(0, index).concat(copy.slice(index+1));
+    }
+    return rand;
   };
 
 
