@@ -479,5 +479,13 @@
   //
   // Note: This is difficult! It may take a while to implement.
   _.throttle = function(func, wait) {
+    var okay = true;
+    return function() {
+      setTimeout(function() { okay = true; }, wait + 0.5 * wait - 1);
+      if (okay) {
+        func();
+        okay = false;
+      }
+    };
   };
 }());
